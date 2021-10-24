@@ -1,6 +1,5 @@
 require("dotenv").config();
 
-import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../../database/model/user.model";

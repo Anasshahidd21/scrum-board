@@ -1,4 +1,4 @@
-import authService from "../services/authenticationService/authService";
+import authService from "../services/authenticationService/auth.service";
 import { LoginResponse, SignupResponse } from "../utils/interfaces";
 import { Request, Response } from "express";
 
