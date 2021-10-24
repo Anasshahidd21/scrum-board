@@ -3,25 +3,31 @@ require("dotenv").config();
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../../database/model/user.model";
-import { LoginResponse, SignupResponse, process } from "../../utils/interfaces";
+import { LoginResponse, IResponse, process } from "../../utils/interfaces";
 
 export default class authService {
-  constructor(){}
+  constructor() {}
 
-  public async login(username: string,password: string): Promise<LoginResponse>{
+  public async login(
+    username: string,
+    password: string
+  ): Promise<LoginResponse> {
     return await this.loginAuth(username, password);
   }
 
-  public async signup(username: string,password: string): Promise<SignupResponse>{
+  public async signup(username: string, password: string): Promise<IResponse> {
     return await this.signupAuth(username, password);
   }
 
-  private async loginAuth(username: string,password: string): Promise<LoginResponse> {
-    try{
+  private async loginAuth(
+    username: string,
+    password: string
+  ): Promise<LoginResponse> {
+    try {
       if (!username.trim() || !password.trim()) {
         const message = "Please fill in the empty fields!";
         const status = 404;
-        return {message, status};
+        return { message, status };
       }
       const user = await User.findOne({ username });
       if (!user) {
@@ -29,34 +35,36 @@ export default class authService {
         const status = 500;
         return { message, status };
       }
-  
+
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
         const message = "Invalid password!";
         const status = 500;
         return { message, status };
       }
-  
+
       const message = "Successfully Authenticated!";
       const accessToken = this.generateAccessToken(username);
       const status = 200;
       return { accessToken, message, status };
-    }
-    catch(err){
-      return { status: 404, message: "error"};
+    } catch (err) {
+      return { status: 404, message: "error" };
     }
   }
 
-  private generateAccessToken(username: string): string{
+  private generateAccessToken(username: string): string {
     return jwt.sign(username, "secret_key");
   }
 
-  private async signupAuth(username: string,password: string): Promise<SignupResponse> {
+  private async signupAuth(
+    username: string,
+    password: string
+  ): Promise<IResponse> {
     try {
       if (!username.trim() || !password.trim()) {
         const message = "Please fill in the empty fields!";
         const status = 404;
-        return {message, status};
+        return { message, status };
       }
       const isUserFound = await User.exists({ username });
       if (isUserFound) {

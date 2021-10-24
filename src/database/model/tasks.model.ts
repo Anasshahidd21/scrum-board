@@ -1,13 +1,25 @@
-import { Document } from "mongoose";
+import mongoose from "mongoose";
+import { model, Schema, Model, Document } from "mongoose";
+import { ITask, TaskState } from "../../utils/interfaces";
 
-export enum TaskState {
-  COMPLETE,
-  PROGRESS,
-  INCOMPLETE,
-}
+const TaskSchema: Schema = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: TaskState,
+    required: true,
+  },
+  creater: {
+    type: String,
+    required: true,
+  },
+});
 
-export interface ImageScheme extends Document {
-  name: string;
-  description: string;
-  state: TaskState;
-}
+const Task = model<ITask>("Task", TaskSchema);
+export default Task;
