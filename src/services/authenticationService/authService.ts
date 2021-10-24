@@ -4,7 +4,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../../database/model/user.model";
-import { LoginResponse, SignupResponse } from "../../utils/interfaces";
+import { LoginResponse, SignupResponse, process } from "../../utils/interfaces";
 
 export default class authService {
   constructor(){}
@@ -19,6 +19,11 @@ export default class authService {
 
   private async loginAuth(username: string,password: string): Promise<LoginResponse> {
     try{
+      if (!username.trim() || !password.trim()) {
+        const message = "Please fill in the empty fields!";
+        const status = 404;
+        return {message, status};
+      }
       const user = await User.findOne({ username });
       if (!user) {
         const message = "No users associated with this username";
@@ -39,16 +44,21 @@ export default class authService {
       return { accessToken, message, status };
     }
     catch(err){
-      return { status: 404, message: err.message };
+      return { status: 404, message: "error"};
     }
   }
 
   private generateAccessToken(username: string): string{
-    return jwt.sign(username, process.env.JWT_SECRET);
+    return jwt.sign(username, "secret_key");
   }
 
   private async signupAuth(username: string,password: string): Promise<SignupResponse> {
     try {
+      if (!username.trim() || !password.trim()) {
+        const message = "Please fill in the empty fields!";
+        const status = 404;
+        return {message, status};
+      }
       const isUserFound = await User.exists({ username });
       if (isUserFound) {
         const message =
@@ -63,7 +73,7 @@ export default class authService {
       const message = "User created successfully";
       return { status, message };
     } catch (err) {
-      return { status: 404, message: err.message };
+      return { status: 404, message: "Errored out" };
     }
   }
 }
