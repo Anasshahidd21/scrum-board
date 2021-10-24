@@ -7,7 +7,6 @@ const tasks = new taskController();
 
 const defaultRouter = Router();
 const authRouter = Router();
-const userRouter = Router();
 const taskRouter = Router();
 
 authRouter.post("/login", auth.login);
@@ -20,7 +19,6 @@ taskRouter.get("/state", tasks.getTasksByState);
 taskRouter.get("/:id", tasks.getTaskByID);
 
 defaultRouter.use("/auth", authRouter);
-defaultRouter.use("/users", userRouter);
 defaultRouter.use("/tasks", taskRouter);
 
 export default defaultRouter;

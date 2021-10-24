@@ -9,6 +9,7 @@ import {
   ITaskResponse,
   TaskState,
 } from "../../utils/interfaces";
+import { ErrorCodes, StatusCode } from "../../utils/errorCodes";
 import Task from "../../database/model/tasks.model";
 
 export default class taskService {
