@@ -10,7 +10,7 @@ export interface LoginResponse {
   status: number;
 }
 
-export interface SignupResponse {
+export interface IResponse {
   message: string;
   status: number;
 }
@@ -22,3 +22,22 @@ export declare const process: {
     PORT: number;
   };
 };
+
+export enum TaskState {
+  COMPLETE,
+  PROGRESS,
+  INCOMPLETE,
+}
+
+export interface ITask extends Document {
+  title: string;
+  description: string;
+  creater: string;
+  state: TaskState;
+}
+
+export interface ITaskResponse {
+  status: number;
+  message?: string;
+  task?: ITask[];
+}

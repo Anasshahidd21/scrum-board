@@ -1,5 +1,5 @@
 import authService from "../services/authenticationService/auth.service";
-import { LoginResponse, SignupResponse } from "../utils/interfaces";
+import { LoginResponse, IResponse } from "../utils/interfaces";
 import { Request, Response } from "express";
 
 export class authController {
@@ -21,10 +21,7 @@ export class authController {
 
   public signup = async (req: Request, res: Response): Promise<void> => {
     const { username, password } = req.body;
-    const response: SignupResponse = await this.service.signup(
-      username,
-      password
-    );
+    const response: IResponse = await this.service.signup(username, password);
     const { message, status } = response;
     res.status(status).json({ message });
     return;
