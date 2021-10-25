@@ -22,7 +22,7 @@ export async function connectDB() {
       }
     );
     if (dbConnection) {
-      console.log("Connected");
+      console.log("Connected to Database!");
     }
   } catch (e) {
     console.error(e);

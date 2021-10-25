@@ -3,8 +3,13 @@ require("dotenv").config();
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../../database/model/user.model";
-import { LoginResponse, IResponse, process } from "../../utils/interfaces";
+import { LoginResponse, IResponse } from "../../utils/interfaces";
 
+declare const process: {
+  env: {
+    JWT_SECRET: string;
+  };
+};
 export default class authService {
   constructor() {}
 
@@ -53,7 +58,7 @@ export default class authService {
   }
 
   private generateAccessToken(username: string): string {
-    return jwt.sign(username, "secret_key");
+    return jwt.sign(username, process.env.JWT_SECRET);
   }
 
   private async signupAuth(

@@ -1,9 +1,16 @@
-require("dotenv").config();
+import path from "path";
+require("dotenv").config({ path: "../../.env" });
 
 import express from "express";
 const app = express();
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
+
+declare const process: {
+  env: {
+    JWT_SECRET: string;
+  };
+};
 
 /**
  * Middleware to authenticate the users before performing any task.
