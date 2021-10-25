@@ -116,7 +116,7 @@ export default class taskService {
       const tasks = await Task.find({ state });
       if (!tasks) {
         const message = `No task in ${state}`;
-        const status = 500;
+        const status = 200;
         return { message, status };
       }
       const status = 200;

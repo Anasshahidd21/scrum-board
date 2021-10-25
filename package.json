@@ -6,14 +6,38 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "build": "rimraf ./dist && tsc --build",
-    "test": "jest"
+    "test": "jest",
+    "test-handles": "jest --detectOpenHandles"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "**/__tests__/*.+(ts|tsx|js)"
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/jest": "^27.0.2",
     "@types/jsonwebtoken": "^8.5.5",
+    "@types/supertest": "^2.0.11",
+    "jest": "^27.0.7",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.0.7",
     "ts-node": "^10.4.0"
   },
   "dependencies": {
@@ -21,6 +45,7 @@
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.7",
     "nodemon": "^2.0.14",

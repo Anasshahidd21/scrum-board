@@ -9,10 +9,12 @@ declare const process: {
   };
 };
 
+let db: typeof mongoose | undefined;
+
 /**
  * Connects to MongoDb.
  */
-export async function connectDB() {
+export const connectDB = async () => {
   try {
     const dbConnection = await mongoose.connect(
       process.env.MONGODB_CONNECTION_URL,
@@ -22,9 +24,20 @@ export async function connectDB() {
       }
     );
     if (dbConnection) {
+      db = dbConnection;
       console.log("Connected to Database!");
     }
   } catch (e) {
     console.error(e);
   }
-}
+};
+
+export const disconnectDB = async () => {
+  try {
+    if (db) {
+      await db.disconnect();
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
